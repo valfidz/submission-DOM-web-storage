@@ -231,10 +231,6 @@ function updateBook(bookId) {
   bookTarget.year = updatedYear;
   bookTarget.isComplete = updatedIsComplete;
 
-  const submitFormEdit = document.getElementById('form-edit');
-  submitFormEdit.action = '#';
-  submitFormEdit.reset();
-
   const hideEdit = document.getElementById('edit-book');
   hideEdit.hidden = true;
 
