@@ -1,0 +1,95 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Ubuntu', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+form {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #404258;
+  text-align: left;
+  padding: 16px;
+  color: #fff7f1;
+}
+
+.main-container {
+  background-color: #474e68;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.input-edit-container {
+  flex: 1;
+}
+
+.input-container,
+.edit-container {
+  background-color: #50577a;
+  margin: 10px;
+  padding: 20px;
+  color: #fff7f1;
+  border-radius: 10px;
+}
+
+.book-container {
+  background-color: #50577a;
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  color: #fff7f1;
+  border-radius: 10px;
+}
+
+.list-book {
+  background-color: #6b728e;
+  margin-bottom: 20px;
+}
+
+.shadow {
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+    0 15px 40px rgba(166, 173, 201, 0.2);
+}
+
+.item > .inner h2 {
+  margin-bottom: unset;
+}
+
+.item > .inner p {
+  margin-top: 5px;
+}
+
+/* @media only screen and (max-width: 1024px) {
+  .wrapper {
+    margin: 0;
+  }
+
+  .wrapper .container {
+    width: 100%;
+  }
+
+  .list-item {
+    width: 90%;
+  }
+
+  .form {
+    width: 100%;
+  }
+} */
