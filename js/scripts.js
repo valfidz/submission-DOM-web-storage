@@ -43,6 +43,15 @@ function getBookIndex(bookId) {
   return -1;
 }
 
+// function getCompleteValue() {
+//   const checkBox = document.getElementById('isChecked');
+//   const hiddenInput = document.getElementById('isComplete');
+
+//   checkBox.addEventListener('change', function () {
+//     hiddenInput.value = checkBox.checked ? 'true' : 'false';
+//   });
+// }
+
 function makeBook(listBook) {
   const { id, title, author, year, isComplete } = listBook;
 
@@ -63,15 +72,6 @@ function makeBook(listBook) {
   container.classList.add('item', 'shadow');
   container.append(bookContainer);
   container.setAttribute('id', `book-${id}`);
-
-  const editButton = document.createElement('button');
-  editButton.innerText = 'Edit Buku';
-  editButton.classList.add('edit-button');
-  editButton.addEventListener('click', function () {
-    editBook(id);
-    const unhideEdit = document.getElementById('edit-book');
-    unhideEdit.hidden = false;
-  });
 
   if (isComplete == 'true' || isComplete == true) {
     const unreadButton = document.createElement('button');
@@ -100,7 +100,6 @@ function makeBook(listBook) {
 
     container.append(readButton);
   }
-  container.append(editButton);
 
   return container;
 }
@@ -120,7 +119,7 @@ function addBook() {
     bookComplete
   );
   books.push(listBook);
-  document.dispatchEvent(new Event(RENDER_EVENT));
+  document.dispatchEvent(new CustomEvent(RENDER_EVENT, { detail: books }));
   saveData();
 }
 
@@ -155,88 +154,36 @@ function unreadBook(bookId) {
 }
 
 function searchBooks() {
-  const searchInput = document.getElementById('searchInput');
-  const searchTerm = searchInput.value.toLowerCase();
+  const searchInput = document
+    .getElementById('searchInput')
+    .value.toLowerCase();
   const filteredBooks = books.filter((book) => {
-    if (searchTerm) {
-      return book.title.toLowerCase().includes(searchTerm);
-    } else {
-      return books;
-    }
+    const titleMatches = book.title.toLowerCase().includes(searchInput);
+    return titleMatches;
   });
 
+  renderBooks(filteredBooks);
+}
+
+function renderBooks(booksToRender) {
   const unreadBook = document.getElementById('books');
   const readBook = document.getElementById('read-books');
+
   unreadBook.innerHTML = '';
   readBook.innerHTML = '';
 
-  for (const bookItem of filteredBooks) {
+  for (const bookItem of booksToRender) {
     const bookElement = makeBook(bookItem);
     if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
       readBook.append(bookElement);
-    } else {
+    }
+    if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
       unreadBook.append(bookElement);
     }
   }
 }
 
-function editBook(bookId) {
-  const bookTarget = getBooks(bookId);
-
-  if (bookTarget == null) return;
-
-  const idInput = document.getElementById('id-edit-book');
-  const titleInput = document.getElementById('title-edit');
-  const authorInput = document.getElementById('writer-edit');
-  const yearInput = document.getElementById('year-edit');
-  const checkBox = document.getElementById('isChecked-edit');
-
-  idInput.value = bookTarget.id;
-  titleInput.value = bookTarget.title;
-  authorInput.value = bookTarget.author;
-  yearInput.value = bookTarget.year;
-  checkBox.checked = bookTarget.isComplete == 'true';
-
-  const submitForm = document.getElementById('form-edit');
-  submitForm.action = '#';
-
-  submitForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    updateBook(bookId);
-  });
-}
-
-function updateBook(bookId) {
-  const updatedTitle = document.getElementById('title-edit').value;
-  const updatedAuthor = document.getElementById('writer-edit').value;
-  const updatedYear = document.getElementById('year-edit').value;
-  const updatedIsComplete = document.getElementById('isChecked-edit').checked
-    ? 'true'
-    : 'false';
-
-  const bookTarget = getBooks(bookId);
-
-  if (bookTarget == null) return;
-
-  bookTarget.title = updatedTitle;
-  bookTarget.author = updatedAuthor;
-  bookTarget.year = updatedYear;
-  bookTarget.isComplete = updatedIsComplete;
-
-  const hideEdit = document.getElementById('edit-book');
-  hideEdit.hidden = true;
-
-  document.dispatchEvent(new Event(RENDER_EVENT));
-  saveData();
-}
-
 document.addEventListener('DOMContentLoaded', function () {
-  const searchButton = document.getElementById('search-button');
-
-  searchButton.addEventListener('click', function () {
-    searchBooks();
-  });
-
   const submitForm = document.getElementById('form');
 
   const checkBox = document.getElementById('isChecked');
@@ -260,22 +207,25 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-  const unreadBook = document.getElementById('books');
-  const readBook = document.getElementById('read-books');
+  const booksToRender = event.detail ? event.detail : books;
+  renderBooks(booksToRender);
 
-  unreadBook.innerHTML = '';
-  readBook.innerHTML = '';
+  // const unreadBook = document.getElementById('books');
+  // const readBook = document.getElementById('read-books');
 
-  for (const bookItem of books) {
-    const bookElement = makeBook(bookItem);
+  // unreadBook.innerHTML = '';
+  // readBook.innerHTML = '';
 
-    if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
-      readBook.append(bookElement);
-    }
-    if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
-      unreadBook.append(bookElement);
-    }
-  }
+  // for (const bookItem of books) {
+  //   const bookElement = makeBook(bookItem);
+  //   console.log('isComplete', bookItem.isComplete);
+  //   if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
+  //     readBook.append(bookElement);
+  //   }
+  //   if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
+  //     unreadBook.append(bookElement);
+  //   }
+  // }
 });
 
 function saveData() {
