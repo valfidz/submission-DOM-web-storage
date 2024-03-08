@@ -71,7 +71,7 @@ function makeBook(listBook) {
     deleteBookCompleted(id);
   });
 
-  if (isComplete == 'true' || isComplete == true) {
+  if (isComplete == true) {
     const unreadButton = document.createElement('button');
     unreadButton.innerText = 'Tandai Belum Dibaca';
     unreadButton.classList.add('unread-button');
@@ -81,7 +81,7 @@ function makeBook(listBook) {
 
     container.append(unreadButton, deleteButton);
   }
-  if (isComplete == 'false' || isComplete == false) {
+  if (isComplete == false) {
     const readButton = document.createElement('button');
     readButton.innerText = 'Tandai Sudah Dibaca';
     readButton.classList.add('read-button');
@@ -108,7 +108,7 @@ function addBook() {
   const bookTitle = document.getElementById('title').value;
   const bookWriter = document.getElementById('writer').value;
   const bookYear = document.getElementById('year').value;
-  const bookComplete = document.getElementById('isComplete').value;
+  const bookComplete = document.getElementById('isChecked').checked;
 
   const generatedId = generateId();
   const listBook = generateBookObject(
@@ -174,10 +174,10 @@ function renderBooks(booksToRender) {
 
   for (const bookItem of booksToRender) {
     const bookElement = makeBook(bookItem);
-    if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
+    if (bookItem.isComplete == true) {
       readBook.append(bookElement);
     }
-    if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
+    if (bookItem.isComplete == false) {
       unreadBook.append(bookElement);
     }
   }
@@ -219,13 +219,10 @@ function editBook(bookId) {
     <div class="form-group-checked">
       <label for="editIsChecked">Selesai dibaca</label>
       <input type="checkbox" id="editIsChecked" ${
-        bookToEdit.isComplete == 'true' || bookToEdit.isComplete == true
+        bookToEdit.isComplete == true
           ? 'checked'
           : ''
       } />
-      <input type="hidden" id="editIsComplete" name="editIsComplete" value="${
-        bookToEdit.isComplete == 'true' || bookToEdit.isComplete == true
-      }" />
     </div>
 
     <input type="submit" value="Update" name="Update" class="btn-submit" />
@@ -257,7 +254,7 @@ function updateBook(bookId) {
   bookToUpdate.title = editedTitle;
   bookToUpdate.author = editedWriter;
   bookToUpdate.year = editedYear;
-  bookToUpdate.isComplete = editedIsComplete;
+  bookToUpdate.isComplete = editedIsComplete ? true : false;
 
   const formEditData = document.getElementById('edit-book');
   formEditData.hidden = true;
@@ -268,16 +265,6 @@ function updateBook(bookId) {
 
 document.addEventListener('DOMContentLoaded', function () {
   const submitForm = document.getElementById('form');
-
-  const checkBox = document.getElementById('isChecked');
-  const hiddenInput = document.getElementById('isComplete');
-  checkBox.checked
-    ? (hiddenInput.value = 'true')
-    : (hiddenInput.value = 'false');
-
-  checkBox.addEventListener('change', function () {
-    hiddenInput.value = checkBox.checked ? 'true' : 'false';
-  });
 
   submitForm.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -299,10 +286,10 @@ document.addEventListener(RENDER_EVENT, function () {
   for (const bookItem of books) {
     const bookElement = makeBook(bookItem);
     console.log('isComplete', bookItem.isComplete);
-    if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
+    if (bookItem.isComplete == true) {
       readBook.append(bookElement);
     }
-    if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
+    if (bookItem.isComplete == false) {
       unreadBook.append(bookElement);
     }
   }
