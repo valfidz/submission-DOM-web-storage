@@ -43,15 +43,6 @@ function getBookIndex(bookId) {
   return -1;
 }
 
-// function getCompleteValue() {
-//   const checkBox = document.getElementById('isChecked');
-//   const hiddenInput = document.getElementById('isComplete');
-
-//   checkBox.addEventListener('change', function () {
-//     hiddenInput.value = checkBox.checked ? 'true' : 'false';
-//   });
-// }
-
 function makeBook(listBook) {
   const { id, title, author, year, isComplete } = listBook;
 
@@ -197,7 +188,6 @@ function editBook(bookId) {
 
   if (bookToEdit == null) return;
 
-  // Display a form to edit the book details
   const editHeader = document.createElement('h2');
   editHeader.innerText = 'Edit Buku';
   editHeader.classList.add('edit-header');
