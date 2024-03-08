@@ -219,9 +219,7 @@ function editBook(bookId) {
     <div class="form-group-checked">
       <label for="editIsChecked">Selesai dibaca</label>
       <input type="checkbox" id="editIsChecked" ${
-        bookToEdit.isComplete == true
-          ? 'checked'
-          : ''
+        bookToEdit.isComplete == true ? 'checked' : ''
       } />
     </div>
 
@@ -285,7 +283,6 @@ document.addEventListener(RENDER_EVENT, function () {
 
   for (const bookItem of books) {
     const bookElement = makeBook(bookItem);
-    console.log('isComplete', bookItem.isComplete);
     if (bookItem.isComplete == true) {
       readBook.append(bookElement);
     }
