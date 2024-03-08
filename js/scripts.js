@@ -101,6 +101,15 @@ function makeBook(listBook) {
     container.append(readButton);
   }
 
+  const editButton = document.createElement('button');
+  editButton.innerText = 'Edit';
+  editButton.classList.add('edit-button');
+  editButton.addEventListener('click', function () {
+    editBook(id);
+  });
+
+  container.append(editButton);
+
   return container;
 }
 
@@ -183,6 +192,88 @@ function renderBooks(booksToRender) {
   }
 }
 
+function editBook(bookId) {
+  const bookToEdit = getBooks(bookId);
+
+  if (bookToEdit == null) return;
+
+  // Display a form to edit the book details
+  const editHeader = document.createElement('h2');
+  editHeader.innerText = 'Edit Buku';
+  editHeader.classList.add('edit-header');
+
+  const editForm = document.createElement('form');
+  editForm.setAttribute('id', 'form-edit-book');
+  editForm.innerHTML = `
+    <div class="form-group">
+    <label for="editTitle">Judul</label>
+    <input type="text" name="editTitle" id="editTitle" value="${
+      bookToEdit.title
+    }" required />
+    </div>
+
+    <div class="form-group">
+    <label for="editWriter">Penulis</label>
+    <input type="text" name="editWriter" id="editWriter" value="${
+      bookToEdit.author
+    }" required />
+    </div>
+
+    <div class="form-group">
+    <label for="editYear">Tahun</label>
+    <input type="number" name="editYear" id="editYear" value="${
+      bookToEdit.year
+    }" required />
+    </div>
+
+    <div class="form-group">
+      <label for="editIsChecked">Selesai dibaca</label>
+      <input type="checkbox" id="editIsChecked" ${
+        bookToEdit.isComplete ? 'checked' : ''
+      } />
+      <input type="hidden" id="editIsComplete" name="editIsComplete" value="${
+        bookToEdit.isComplete
+      }" />
+    </div>
+
+    <input type="submit" value="Update" name="Update" class="btn-submit" />
+  `;
+
+  const formEditData = document.getElementById('edit-book');
+  formEditData.hidden = false;
+
+  editForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    updateBook(bookId);
+  });
+
+  const editContainer = document.getElementById(`edit-book`);
+  editContainer.innerHTML = '';
+  editContainer.append(editHeader, editForm);
+}
+
+function updateBook(bookId) {
+  const editedTitle = document.getElementById('editTitle').value;
+  const editedWriter = document.getElementById('editWriter').value;
+  const editedYear = document.getElementById('editYear').value;
+  const editedIsComplete = document.getElementById('editIsChecked').checked;
+
+  const bookToUpdate = getBooks(bookId);
+
+  if (bookToUpdate == null) return;
+
+  bookToUpdate.title = editedTitle;
+  bookToUpdate.author = editedWriter;
+  bookToUpdate.year = editedYear;
+  bookToUpdate.isComplete = editedIsComplete;
+
+  const formEditData = document.getElementById('edit-book');
+  formEditData.hidden = true;
+
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const submitForm = document.getElementById('form');
 
@@ -207,25 +298,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-  const booksToRender = event.detail ? event.detail : books;
-  renderBooks(booksToRender);
+  const unreadBook = document.getElementById('books');
+  const readBook = document.getElementById('read-books');
 
-  // const unreadBook = document.getElementById('books');
-  // const readBook = document.getElementById('read-books');
+  unreadBook.innerHTML = '';
+  readBook.innerHTML = '';
 
-  // unreadBook.innerHTML = '';
-  // readBook.innerHTML = '';
-
-  // for (const bookItem of books) {
-  //   const bookElement = makeBook(bookItem);
-  //   console.log('isComplete', bookItem.isComplete);
-  //   if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
-  //     readBook.append(bookElement);
-  //   }
-  //   if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
-  //     unreadBook.append(bookElement);
-  //   }
-  // }
+  for (const bookItem of books) {
+    const bookElement = makeBook(bookItem);
+    console.log('isComplete', bookItem.isComplete);
+    if (bookItem.isComplete == 'true' || bookItem.isComplete == true) {
+      readBook.append(bookElement);
+    }
+    if (bookItem.isComplete == 'false' || bookItem.isComplete == false) {
+      unreadBook.append(bookElement);
+    }
+  }
 });
 
 function saveData() {

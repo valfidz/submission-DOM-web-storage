@@ -19,50 +19,59 @@
     </header>
 
     <div class="main-container">
-      <div class="input-container" id="input-book">
-        <h2 class="input-header">Masukkan Nama Buku</h2>
-        <form action="#" class="form" id="form">
-          <div class="form-group">
-            <label for="title">Judul</label>
-            <input type="text" name="title" id="title" required />
-          </div>
+      <div class="sub-main-container">
+        <div class="input-container" id="input-book">
+          <h2 class="input-header">Masukkan Nama Buku</h2>
+          <form action="#" class="form" id="form">
+            <div class="form-group">
+              <label for="title">Judul</label>
+              <input type="text" name="title" id="title" required />
+            </div>
 
-          <div class="form-group">
-            <label for="writer">Penulis</label>
-            <input type="text" name="writer" id="writer" required />
-          </div>
+            <div class="form-group">
+              <label for="writer">Penulis</label>
+              <input type="text" name="writer" id="writer" required />
+            </div>
 
-          <div class="form-group">
-            <label for="year">Tahun</label>
-            <input type="number" name="year" id="year" required />
-          </div>
+            <div class="form-group">
+              <label for="year">Tahun</label>
+              <input type="number" name="year" id="year" required />
+            </div>
 
-          <div class="form-group">
-            <label for="isChecked">Selesai dibaca</label>
-            <input type="checkbox" id="isChecked" />
-            <!-- hidden input for dynamic value -->
+            <div class="form-group">
+              <label for="isChecked">Selesai dibaca</label>
+              <input type="checkbox" id="isChecked" />
+              <!-- hidden input for dynamic value -->
+              <input
+                type="hidden"
+                id="isComplete"
+                name="isComplete"
+                value="false"
+              />
+            </div>
             <input
-              type="hidden"
-              id="isComplete"
-              name="isComplete"
-              value="false"
+              type="submit"
+              value="Submit"
+              name="Submit"
+              class="btn-submit"
             />
-          </div>
-          <input
-            type="submit"
-            value="Submit"
-            name="Submit"
-            class="btn-submit"
-          />
-        </form>
+          </form>
 
+          <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search books..." />
+            <button onclick="searchBooks()">Search</button>
+          </div>
+        </div>
+
+        <div class="edit-container" id="edit-book" hidden></div>
+      </div>
+
+      <div class="book-container" id="activity-book">
         <div class="search-container">
           <input type="text" id="searchInput" placeholder="Search books..." />
           <button onclick="searchBooks()">Search</button>
         </div>
-      </div>
 
-      <div class="book-container" id="activity-book">
         <div class="list-book-container">
           <h2 class="book-header">Belum Selesai Dibaca</h2>
           <div class="list-book" id="books"></div>
