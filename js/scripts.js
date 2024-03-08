@@ -73,19 +73,19 @@ function makeBook(listBook) {
   container.append(bookContainer);
   container.setAttribute('id', `book-${id}`);
 
+  const deleteButton = document.createElement('button');
+  deleteButton.innerText = 'Hapus Bacaan';
+  deleteButton.classList.add('delete-button');
+  deleteButton.addEventListener('click', function () {
+    deleteBookCompleted(id);
+  });
+
   if (isComplete == 'true' || isComplete == true) {
     const unreadButton = document.createElement('button');
     unreadButton.innerText = 'Tandai Belum Dibaca';
     unreadButton.classList.add('unread-button');
     unreadButton.addEventListener('click', function () {
       unreadBook(id);
-    });
-
-    const deleteButton = document.createElement('button');
-    deleteButton.innerText = 'Hapus Bacaan';
-    deleteButton.classList.add('delete-button');
-    deleteButton.addEventListener('click', function () {
-      deleteBookCompleted(id);
     });
 
     container.append(unreadButton, deleteButton);
@@ -98,7 +98,7 @@ function makeBook(listBook) {
       readBookCompleted(id);
     });
 
-    container.append(readButton);
+    container.append(readButton, deleteButton);
   }
 
   const editButton = document.createElement('button');
