@@ -115,7 +115,7 @@ function addBook() {
     generatedId,
     bookTitle,
     bookWriter,
-    bookYear,
+    parseInt(bookYear),
     bookComplete
   );
   books.push(listBook);
@@ -251,7 +251,7 @@ function updateBook(bookId) {
 
   bookToUpdate.title = editedTitle;
   bookToUpdate.author = editedWriter;
-  bookToUpdate.year = editedYear;
+  bookToUpdate.year = parseInt(editedYear);
   bookToUpdate.isComplete = editedIsComplete ? true : false;
 
   const formEditData = document.getElementById('edit-book');
