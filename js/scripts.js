@@ -229,10 +229,12 @@ function editBook(bookId) {
     <div class="form-group">
       <label for="editIsChecked">Selesai dibaca</label>
       <input type="checkbox" id="editIsChecked" ${
-        bookToEdit.isComplete ? 'checked' : ''
+        bookToEdit.isComplete == 'true' || bookToEdit.isComplete == true
+          ? 'checked'
+          : ''
       } />
       <input type="hidden" id="editIsComplete" name="editIsComplete" value="${
-        bookToEdit.isComplete
+        bookToEdit.isComplete == 'true' || bookToEdit.isComplete == true
       }" />
     </div>
 
