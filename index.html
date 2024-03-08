@@ -20,7 +20,7 @@
 
     <div class="main-container">
       <div class="sub-main-container">
-        <div class="input-container" id="input-book">
+        <div class="input-container shadow" id="input-book">
           <h2 class="input-header">Masukkan Nama Buku</h2>
           <form action="#" class="form" id="form">
             <div class="form-group">
@@ -38,7 +38,7 @@
               <input type="number" name="year" id="year" required />
             </div>
 
-            <div class="form-group">
+            <div class="form-group-checked">
               <label for="isChecked">Selesai dibaca</label>
               <input type="checkbox" id="isChecked" />
               <!-- hidden input for dynamic value -->
@@ -58,13 +58,13 @@
           </form>
         </div>
 
-        <div class="edit-container" id="edit-book" hidden></div>
+        <div class="edit-container shadow" id="edit-book" hidden></div>
       </div>
 
-      <div class="book-container" id="activity-book">
+      <div class="book-container shadow" id="activity-book">
         <div class="search-container">
           <input type="text" id="searchInput" placeholder="Cari judul...." />
-          <button onclick="searchBooks()">Cari</button>
+          <button class="search-button" onclick="searchBooks()">Cari</button>
         </div>
 
         <div class="list-book-container">

@@ -226,7 +226,7 @@ function editBook(bookId) {
     }" required />
     </div>
 
-    <div class="form-group">
+    <div class="form-group-checked">
       <label for="editIsChecked">Selesai dibaca</label>
       <input type="checkbox" id="editIsChecked" ${
         bookToEdit.isComplete == 'true' || bookToEdit.isComplete == true
