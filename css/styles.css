@@ -163,20 +163,45 @@ input {
   width: 50%;
 }
 
-/* @media only screen and (max-width: 1024px) {
-  .wrapper {
+@media only screen and (max-width: 1024px) {
+  .main-container {
     margin: 0;
   }
 
-  .wrapper .container {
+  .main-container .sub-main-container,
+  .book-container {
     width: 100%;
   }
 
-  .list-item {
+  .list-book {
     width: 90%;
   }
 
-  .form {
+  .form,
+  #form-edit-book {
     width: 100%;
   }
-} */
+}
+
+@media only screen and (max-width: 600px) {
+  .main-container {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .sub-main-container,
+  .book-container {
+    width: 100%;
+  }
+
+  .list-book {
+    width: 100%;
+  }
+
+  .form,
+  #form-edit-book {
+    width: 100%;
+  }
+}
